@@ -21,3 +21,6 @@ target_link_libraries(${PROJECT_NAME} glad)
 add_subdirectory(external/catch2)
 add_executable(tests "tests/test.cpp")
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+
+add_subdirectory(external/glm)
+target_link_libraries(${PROJECT_NAME} glm)
