@@ -1,14 +1,17 @@
 #ifndef SNJE_H
 #define SNJE_H
 
-// External libraries
+// External libraries //
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 
-// Standart libraries
-
+// Standart libraries //
 #include <iostream>
+#include <vector>
 
+// Local libraries //
+#include <LocalException.hpp>
+#include <Shader.h>
 
 #endif
