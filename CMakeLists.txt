@@ -8,13 +8,16 @@ include_directories(shaders)
 
 set(SOURCES 
 	src/Shader.cpp
+	"src/Camera.cpp"
 )
 
 
 add_executable(${PROJECT_NAME} 
 	"main.cpp" 
 	${SOURCES} 
+	"include/Shader.h"
 	"include/LocalException.hpp"
+	"include/Camera.h"
 )
 
 # GLFW LIBRARY
@@ -30,20 +33,25 @@ target_link_libraries(${PROJECT_NAME} glfw)
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} glad)
 
-# CATCH 2
-add_subdirectory(external/catch2)
-add_executable(tests 
-	"tests/test.cpp" 
-	"include/Shader.h" 
-	"src/Shader.cpp" 
-	"include/LocalException.hpp"
-	"external/glad"
-)
-target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
-target_link_libraries(tests PRIVATE glad)
+
 # GLM
 add_subdirectory(external/glm)
 target_link_libraries(${PROJECT_NAME} glm)
+
+# CATCH 2
+add_subdirectory(external/catch2)
+add_executable(tests
+	${SOURCES}
+	"tests/test.cpp"
+	"include/Shader.h" 	
+	"include/LocalException.hpp"
+	"include/Camera.h"
+)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE glad)
+target_link_libraries(tests PRIVATE glm)
+target_link_libraries(tests PRIVATE glfw)
+
 
 # Shader Files
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test.vert

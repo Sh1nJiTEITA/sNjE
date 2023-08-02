@@ -5,6 +5,8 @@
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
+int width = 800;
+int height = 600;
 
 int main()
 {
@@ -14,18 +16,17 @@ int main()
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(width, height, "LearnOpenGL", NULL, NULL);
 		if (window == NULL)
 		{
-			std::cout << "Failed to create GLFW window" << std::endl;
-			glfwTerminate();
+			throw LocalException("Failed to create GLFW window");
 			return -1;
 		}
 		glfwMakeContextCurrent(window);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
-			std::cout << "Failed to initialize GLAD" << std::endl;
+			throw LocalException("Failed to initialize GLAD");
 			return -1;
 		}
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -57,8 +58,6 @@ int main()
 		glEnableVertexAttribArray(1);
 
 
-
-
 		while (!glfwWindowShouldClose(window))
 		{
 			processInput(window);
@@ -66,8 +65,24 @@ int main()
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			// Test
+			glm::mat4 rot = glm::mat4(1.0f);
+			rot = glm::rotate(rot, (float)glfwGetTime(), glm::vec3(1.0f, 0.0f, 0.0f));
+			
+			glm::mat4 view = glm::mat4(1.0f);
+			glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+			
+			glm::mat4 projection = glm::mat4(1.0f);
+			projection = glm::perspective(glm::radians(45.0f), float(width) / float(height), 0.1f, 100.0f);
+
 			// Start rendering
-			test_shader.use();
+			test_shader.Use();
+			
+			test_shader.SetMat4("rot", rot);
+			test_shader.SetMat4("view", view);
+			test_shader.SetMat4("projection", projection);
+
+
 			glBindVertexArray(VAO);
 			glDrawArrays(GL_TRIANGLES, 0, 3);
 
