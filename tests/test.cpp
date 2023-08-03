@@ -45,6 +45,18 @@ TEST_CASE("CAMERA", "[camera methods]")
 		);
 		
 		REQUIRE(cam_base.GetProjection() == projection_1);
+
+		window_width = 1920;
+		window_height = 1024;
+
+		glm::mat4 projection_2 = glm::perspective(
+			fov,
+			(float)(window_width / window_height),
+			near_plane,
+			far_plane
+		);
+
+		REQUIRE(cam_base.GetProjection() == projection_2);
 	}
 
 	

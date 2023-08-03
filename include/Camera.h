@@ -38,22 +38,28 @@ protected:
 	unsigned int* __window_width;
 	unsigned int* __window_height;
 	
-	glm::vec3 __pos;
-	glm::vec3 __front;
-	glm::vec3 __up;
-
+	
 	double __last_frame_time;
 	double __delta_time;
 
 public:
+
+	// For public use:
+	glm::vec3 pos;
+	glm::vec3 front;
+	glm::vec3 up;
+	
+	float speed;
+
 	CameraBase(
-		glm::vec3 pos,
-		glm::vec3 front, 
-		glm::vec3 up, 
-		unsigned int* wid, 
-		unsigned int* hei
+		glm::vec3 _pos,
+		glm::vec3 _front, 
+		glm::vec3 _up, 
+		unsigned int* _wid, 
+		unsigned int* _hei
 	);
 	CameraBase();
+
 
 	glm::mat4 GetView();
 	glm::mat4 GetProjection();
@@ -75,6 +81,12 @@ public:
 		unsigned int* hei
 	);
 
+	void GoStraight();
+	void GoBack();
+	void GoRight();
+	void GoLeft();
+	void GoUp();
+	void GoDown();
 
 };
 

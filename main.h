@@ -14,5 +14,6 @@
 // Local libraries //
 #include <LocalException.hpp>
 #include <Shader.h>
+#include <Camera.h>
 
 #endif
