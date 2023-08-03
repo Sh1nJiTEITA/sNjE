@@ -1,15 +1,18 @@
 
 #include "main.h"
 
-
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
 unsigned int width = 800;
 unsigned int height = 600;
 
+float xpos = width/2;
+float ypos = height/2;
+
 FreeFlightCamera cam(
-	glm::vec3(0.0f, 0.0f, 3.0f),
+	glm::vec3(0.0f, 0.0f, -3.0f),
 	glm::vec3(0.0f, 0.0f, -1.0f),
 	glm::vec3(0.0f, 1.0f, 0.0f),
 	&width,
@@ -38,8 +41,10 @@ int main()
 			return -1;
 		}
 		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		glfwSetCursorPosCallback(window, mouse_callback);
 
 
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		Shader test_shader("test.vert", "test.frag");
 		
 
@@ -106,18 +111,21 @@ int main()
 		//glEnableVertexAttribArray(1);
 
 
+		cam.BindMousePos(&xpos, &ypos);
+
 		while (!glfwWindowShouldClose(window))
 		{
 			processInput(window);
 			
 			cam.UpdateDeltaTime();
+			
 
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// Test
 			glm::mat4 rot = glm::mat4(1.0f);
-			rot = glm::rotate(rot, (float)glfwGetTime(), glm::vec3(1.0f, 0.5f, 0.0f));
+			//rot = glm::rotate(rot, (float)glfwGetTime(), glm::vec3(1.0f, 0.5f, 0.0f));
 			
 			glm::mat4 view = glm::mat4(1.0f);
 			view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
@@ -163,6 +171,15 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
+
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+	xpos = static_cast<float>(xposIn);
+	ypos = static_cast<float>(yposIn);
+
+	cam.UpdateMouse();
+}
+
 
 void processInput(GLFWwindow* window)
 {

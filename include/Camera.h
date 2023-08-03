@@ -16,9 +16,10 @@
 #include <GLFW/glfw3.h>
 #include <glm/gtx/transform.hpp>
 // STL //
+#include <iostream>
 
 // Local //
-
+#include <LocalException.hpp>
 
 
 /*
@@ -28,6 +29,9 @@
 class CameraBase
 {
 protected:
+	// Mouse parts
+	float* __m_x_pos;
+	float* __m_y_pos;
 
 	// Projection part
 	float __fov;
@@ -42,6 +46,8 @@ protected:
 	double __last_frame_time;
 	double __delta_time;
 
+	
+
 public:
 
 	// For public use:
@@ -50,6 +56,8 @@ public:
 	glm::vec3 up;
 	
 	float speed;
+
+	
 
 	CameraBase(
 		glm::vec3 _pos,
@@ -67,11 +75,23 @@ public:
 	// Delta time 
 	void UpdateDeltaTime();
 	const double GetDeltaTime();
+
+	void BindMousePos(float* x_pos, float* y_pos);
+	void UnbindMousePos();
+	
 };
+
+
+
 
 class FreeFlightCamera : public CameraBase
 {
-	
+	float __last_xpos;
+	float __last_ypos;
+
+	float __yaw;
+	float __pitch;
+
 public:
 	FreeFlightCamera(
 		glm::vec3 pos,
@@ -88,6 +108,7 @@ public:
 	void GoUp();
 	void GoDown();
 
+	void UpdateMouse();
 };
 
 

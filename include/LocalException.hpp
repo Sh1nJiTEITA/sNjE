@@ -3,6 +3,8 @@
 
 #include <exception>
 #include <string>
+#include <sstream>
+
 
 class LocalException : public std::exception
 {
