@@ -54,47 +54,47 @@ int main()
 
 
 		std::vector<float> vertices = {
-			 -0.5f, -0.5f, -0.5f,
-			 0.5f, -0.5f, -0.5f,
-			 0.5f,  0.5f, -0.5f,
-			 0.5f,  0.5f, -0.5f,
-			-0.5f,  0.5f, -0.5f,
-			-0.5f, -0.5f, -0.5f,
+			 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-			-0.5f, -0.5f,  0.5f,
-			 0.5f, -0.5f,  0.5f,
-			 0.5f,  0.5f,  0.5f,
-			 0.5f,  0.5f,  0.5f,
-			-0.5f,  0.5f,  0.5f,
-			-0.5f, -0.5f,  0.5f,
+			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+			 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+			 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+			 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-			-0.5f,  0.5f,  0.5f,
-			-0.5f,  0.5f, -0.5f,
-			-0.5f, -0.5f, -0.5f,
-			-0.5f, -0.5f, -0.5f,
-			-0.5f, -0.5f,  0.5f,
-			-0.5f,  0.5f,  0.5f,
+			-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-			 0.5f,  0.5f,  0.5f,
-			 0.5f,  0.5f, -0.5f,
-			 0.5f, -0.5f, -0.5f,
-			 0.5f, -0.5f, -0.5f,
-			 0.5f, -0.5f,  0.5f,
-			 0.5f,  0.5f,  0.5f,
+			 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-			-0.5f, -0.5f, -0.5f,
-			 0.5f, -0.5f, -0.5f,
-			 0.5f, -0.5f,  0.5f,
-			 0.5f, -0.5f,  0.5f,
-			-0.5f, -0.5f,  0.5f,
-			-0.5f, -0.5f, -0.5f,
+			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+			 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+			 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+			 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-			-0.5f,  0.5f, -0.5f,
-			 0.5f,  0.5f, -0.5f,
-			 0.5f,  0.5f,  0.5f,
-			 0.5f,  0.5f,  0.5f,
-			-0.5f,  0.5f,  0.5f,
-			-0.5f,  0.5f, -0.5f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+			 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+			 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+			 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 		};
 
 		unsigned int VBO;
@@ -109,10 +109,10 @@ int main()
 		glBindVertexArray(cubeVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
-		
-		
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
 
 		// LIGHT SOURCE
 		unsigned int lampVAO;
@@ -121,7 +121,7 @@ int main()
 		
 		glBindVertexArray(lampVAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 
 		glBindVertexArray(0);
@@ -140,7 +140,8 @@ int main()
 			cam.UpdateDeltaTime();
 			
 
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			// Test
@@ -149,23 +150,44 @@ int main()
 
 
 			
+			
+			
+			// Lights //
+				
+				// Cube //
+				glm::vec3 cube_color = glm::vec3(0.7f, 0.1f, 0.8f);
+
+				// Light Source //
+				glm::vec3 light_source_color = glm::vec3(1.0f, 1.0f, 1.0f);
+				
+
+				// float delta_time = glm::sin((float)glfwGetTime());
+				// Changes in light //
+				//light_source_color.r *= glm::sin((float)glfwGetTime());
+				//light_source_color.g *= glm::sin((float)glfwGetTime() + glm::radians(90.0f));
+				//light_source_color.b *= glm::sin((float)glfwGetTime() + glm::radians(180.0f));
+			
+			// Positions //
+				// Cube //
+				
+				
+				glm::vec3 cubePos = glm::vec3(0.0f, 0.0f, 0.0f);
+				glm::mat4 cubeModel = glm::translate(glm::mat4(1.0f), cubePos);
+
+				// Light Source //
+				float time_value = (float)glfwGetTime();
+				float light_source_rotate_radius = 2.0f;
+				glm::vec3 lightPos = light_source_rotate_radius * glm::vec3(
+					-2,//glm::sin(time_value), 
+					1, 
+					-2//glm::cos(time_value)
+				); 
+				
+				glm::mat4 lightModel = glm::translate(glm::mat4(1.0f), lightPos);
+				lightModel = glm::scale(lightModel, glm::vec3(0.2f, 0.2f, 0.2f));
+
 			// Start rendering
-			
-			// Lights
-			glm::vec3 light_source_color = glm::vec3(1.0f, 1.0f, 1.0f);
-			glm::vec3 cube_color = glm::vec3(0.5f, 0.5f, 0.5f);
-
-			//float delta_time = glm::sin((float)glfwGetTime());
-
-			light_source_color.r *= glm::sin((float)glfwGetTime());
-			light_source_color.g *= glm::sin((float)glfwGetTime() + glm::radians(90.0f));
-			light_source_color.b *= glm::sin((float)glfwGetTime() + glm::radians(180.0f));
-			
-
-			// CUBE
-			glm::vec3 cubePos = glm::vec3(0.0f, 0.0f, 0.0f);
-			glm::mat4 cubeModel = glm::translate(glm::mat4(1.0f), cubePos);
-
+			// CUBE //
 			test_shader.Use();
 
 			test_shader.SetMat4("rot", cubeModel);
@@ -174,15 +196,29 @@ int main()
 
 			test_shader.SetVec3("light_color", light_source_color);
 			test_shader.SetVec3("model_color", cube_color);
+			test_shader.SetVec3("light_pos", lightPos);
+			test_shader.SetVec3("view_pos", cam.pos);
 
 			glBindVertexArray(cubeVAO);
 			glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 3);
 
-			// LIGHT_SOURCE
-			glm::vec3 lightPos = glm::vec3(0.0f, 1.0f, 0.0f);
-			glm::mat4 lightModel = glm::translate(glm::mat4(1.0f), lightPos);
-			lightModel = glm::scale(lightModel, glm::vec3(0.2f, 0.2f, 0.2f));
+			// PLATFORM
 
+			glm::vec3 platform_pos = glm::vec3(0.0f, -0.7f, 0.0f);
+			glm::mat4 platform_model = glm::mat4(1.0f);
+			glm::vec3 platform_color = glm::vec3(0.3f, 0.3f, 0.3f);
+			
+			platform_model = glm::scale(platform_model, glm::vec3(10.0f, 10.0f, 10.0f));
+			platform_model = glm::translate(platform_model, platform_pos);
+
+
+			test_shader.SetVec3("model_color", platform_color);
+
+			test_shader.SetMat4("rot", platform_model);
+			glBindVertexArray(cubeVAO);
+			glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 3);
+
+			// LIGHT_SOURCE
 			lamp_shader.Use();
 
 			lamp_shader.SetMat4("rot", lightModel);
