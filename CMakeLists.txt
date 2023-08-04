@@ -59,3 +59,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test.vert
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test.frag
     ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)

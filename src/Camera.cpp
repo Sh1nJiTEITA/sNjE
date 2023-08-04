@@ -76,7 +76,7 @@ void CameraBase::BindMousePos(float* x_pos, float* y_pos)
 	else
 		exc_y = true;
 
-	if (exc_x || exc_x)
+	if (exc_x || exc_y)
 	{
 		std::stringstream ss;
 		
@@ -211,6 +211,6 @@ void FreeFlightCamera::UpdateMouse()
 	));  
 
 	//std::cout << "(" << xpos << ", " << ypos << ")";
-	std::cout << "\t(" << front.x << ", " << front.y << ", " << front.z << ")";
-	std::cout << "\t angle(x/z: " << glm::degrees(__yaw) << ", y:" << glm::degrees(__pitch) << ") " << std::endl;
+	//std::cout << "\t(" << front.x << ", " << front.y << ", " << front.z << ")";
+	//std::cout << "\t angle(x/z: " << glm::degrees(__yaw) << ", y:" << glm::degrees(__pitch) << ") " << std::endl;
 }
