@@ -54,10 +54,10 @@ target_link_libraries(tests PRIVATE glfw)
 
 
 # Shader Files
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test.vert
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
     ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test.frag
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
     ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert

@@ -13,7 +13,7 @@ float ypos = height/2;
 
 FreeFlightCamera cam(
 	glm::vec3(0.0f, 0.0f, -3.0f),
-	glm::vec3(0.0f, 0.0f, -1.0f),
+	glm::vec3(0.0f, 0.0f, 1.0f),
 	glm::vec3(0.0f, 1.0f, 0.0f),
 	&width,
 	&height
@@ -45,7 +45,7 @@ int main()
 
 
 		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		Shader test_shader("test.vert", "test.frag");
+		Shader test_shader("std_object.vert", "std_object.frag");
 		Shader lamp_shader("lamp.vert", "lamp.frag");
 
 
@@ -152,41 +152,57 @@ int main()
 			
 			
 			
-			// Lights //
+		// Lights //
 				
-				// Cube //
-				glm::vec3 cube_color = glm::vec3(0.7f, 0.1f, 0.8f);
+			// Cube Material //
+			glm::vec3 emerald_ambient = glm::vec3(0.0215f, 0.1745f, 0.0215f);
+			glm::vec3 emerald_diffuse = glm::vec3(0.07568f, 0.61424, 0.07568);
+			glm::vec3 emerald_specular = glm::vec3(0.633f, 0.727811f, 0.633f);
+			float emerald_shininess = 0.6f * 128.0f;
 
-				// Light Source //
-				glm::vec3 light_source_color = glm::vec3(1.0f, 1.0f, 1.0f);
-				
+			glm::vec3 black_plastic_ambient = glm::vec3(0.0f, 0.0f,	0.0f);
+			glm::vec3 black_plastic_diffuse = glm::vec3(0.01f, 0.01f, 0.01f);
+			glm::vec3 black_plastic_specular = glm::vec3(0.50f, 0.50f, 0.50f);
+			float black_plastic_shininess = 0.25 * 128.0f;
 
-				// float delta_time = glm::sin((float)glfwGetTime());
-				// Changes in light //
-				//light_source_color.r *= glm::sin((float)glfwGetTime());
-				//light_source_color.g *= glm::sin((float)glfwGetTime() + glm::radians(90.0f));
-				//light_source_color.b *= glm::sin((float)glfwGetTime() + glm::radians(180.0f));
+			/*glm::vec3 emerald_ambient = glm::vec3(1.0f, 0.5f, 0.31f);
+			glm::vec3 emerald_diffuse = glm::vec3(1.0f, 0.5f, 0.31f);
+			glm::vec3 emerald_specular = glm::vec3(0.5f, 0.5f, 0.5f);
+			float emerald_shininess = 32.0f;*/
+
+
+			// Light Source //
+			glm::vec3 light_source_color = glm::vec3(1.0f, 1.0f, 1.0f);
+			glm::vec3 light_ambient = light_source_color * glm::vec3(0.2f * 0.5f);
+			glm::vec3 light_diffuse = light_source_color * glm::vec3(0.5f);
+			glm::vec3 light_specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			// float delta_time = glm::sin((float)glfwGetTime());
+			// Changes in light //
+			//light_source_color.r *= glm::sin((float)glfwGetTime());
+			//light_source_color.g *= glm::sin((float)glfwGetTime() + glm::radians(90.0f));
+			//light_source_color.b *= glm::sin((float)glfwGetTime() + glm::radians(180.0f));
 			
-			// Positions //
-				// Cube //
+		// Positions //
+			// Cube //
 				
 				
-				glm::vec3 cubePos = glm::vec3(0.0f, 0.0f, 0.0f);
-				glm::mat4 cubeModel = glm::translate(glm::mat4(1.0f), cubePos);
+			glm::vec3 cubePos = glm::vec3(0.0f, 0.0f, 0.0f);
+			glm::mat4 cubeModel = glm::translate(glm::mat4(1.0f), cubePos);
 
-				// Light Source //
-				float time_value = (float)glfwGetTime();
-				float light_source_rotate_radius = 2.0f;
-				glm::vec3 lightPos = light_source_rotate_radius * glm::vec3(
-					-2,//glm::sin(time_value), 
-					1, 
-					-2//glm::cos(time_value)
-				); 
+			// Light Source //
+			float time_value = (float)glfwGetTime();
+			float light_source_rotate_radius = 2.0f;
+			glm::vec3 lightPos = light_source_rotate_radius * glm::vec3(
+				-2,//glm::sin(time_value), 
+				1, 
+				-2//glm::cos(time_value)
+			); 
 				
-				glm::mat4 lightModel = glm::translate(glm::mat4(1.0f), lightPos);
-				lightModel = glm::scale(lightModel, glm::vec3(0.2f, 0.2f, 0.2f));
+			glm::mat4 lightModel = glm::translate(glm::mat4(1.0f), lightPos);
+			lightModel = glm::scale(lightModel, glm::vec3(0.2f, 0.2f, 0.2f));
 
-			// Start rendering
+		// Start rendering
 			// CUBE //
 			test_shader.Use();
 
@@ -194,9 +210,24 @@ int main()
 			test_shader.SetMat4("view", cam.GetView());
 			test_shader.SetMat4("projection", cam.GetProjection());
 
-			test_shader.SetVec3("light_color", light_source_color);
-			test_shader.SetVec3("model_color", cube_color);
-			test_shader.SetVec3("light_pos", lightPos);
+			//test_shader.SetVec3("light_color", light_source_color);
+			// Material
+			test_shader.SetVec3("material.ambient", black_plastic_ambient);
+			test_shader.SetVec3("material.diffuse", black_plastic_diffuse);
+			test_shader.SetVec3("material.specular", black_plastic_specular);
+
+			test_shader.SetFloat("material.shininess", black_plastic_shininess);
+			
+			// Light
+			test_shader.SetVec3("light.position", lightPos);
+
+			test_shader.SetVec3("light.ambient", light_ambient);
+			test_shader.SetVec3("light.diffuse", light_diffuse);
+			test_shader.SetVec3("light.specular", light_specular);
+			
+
+			//test_shader.SetVec3("model_color", cube_color);
+			//test_shader.SetVec3("light_pos", lightPos);
 			test_shader.SetVec3("view_pos", cam.pos);
 
 			glBindVertexArray(cubeVAO);
@@ -216,7 +247,7 @@ int main()
 
 			test_shader.SetMat4("rot", platform_model);
 			glBindVertexArray(cubeVAO);
-			glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 3);
+			//glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 3);
 
 			// LIGHT_SOURCE
 			lamp_shader.Use();
