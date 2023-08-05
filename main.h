@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 // Standart libraries //
 #include <iostream>

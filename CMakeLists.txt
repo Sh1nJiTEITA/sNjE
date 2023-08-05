@@ -5,19 +5,38 @@ project(${PROJECT_NAME})
 
 include_directories(include)
 include_directories(shaders)
+include_directories(textures)
 
+# Sources
+set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCES 
-	src/Shader.cpp
-	"src/Camera.cpp"
+	${SOURCES_DIR}/Shader.cpp
+	${SOURCES_DIR}/Camera.cpp
 )
+
+# Textures
+set(TEXTURE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
+set(TEXTURES
+	${TEXTURE_DIR}/container2.png
+)
+
+# Includes
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(INCLUDES
+	${INCLUDE_DIR}/Shader.h
+	${INCLUDE_DIR}/LocalException.hpp
+	${INCLUDE_DIR}/Camera.h
+	${INCLUDE_DIR}/stb_image.h
+)
+
 
 
 add_executable(${PROJECT_NAME} 
 	"main.cpp" 
-	${SOURCES} 
-	"include/Shader.h"
-	"include/LocalException.hpp"
-	"include/Camera.h"
+	"main.h"
+	${SOURCES}
+	${TEXTURES}
+	${INCLUDES}
 )
 
 # GLFW LIBRARY
@@ -41,11 +60,9 @@ target_link_libraries(${PROJECT_NAME} glm)
 # CATCH 2
 add_subdirectory(external/catch2)
 add_executable(tests
-	${SOURCES}
 	"tests/test.cpp"
-	"include/Shader.h" 	
-	"include/LocalException.hpp"
-	"include/Camera.h"
+	${SOURCES}
+	${INCLUDES}
 )
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(tests PRIVATE glad)
@@ -65,3 +82,5 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
     ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
