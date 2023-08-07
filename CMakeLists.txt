@@ -18,6 +18,7 @@ set(SOURCES
 set(TEXTURE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
 set(TEXTURES
 	${TEXTURE_DIR}/container2.png
+	${TEXTURE_DIR}/models/cube.dae
 )
 
 # Includes
@@ -57,17 +58,33 @@ target_link_libraries(${PROJECT_NAME} glad)
 add_subdirectory(external/glm)
 target_link_libraries(${PROJECT_NAME} glm)
 
+
+set(ZLIB_LIBRARIES zlibstatic)
+set(ENABLE_BOOST_WORKAROUND ON)
+set(BUILD_STATIC_LIB ON)
+set(BUILD_ASSIMP_TOOLS  ON)
+set(ASSIMP_BUILD_STATIC_LIB ON)
+
+# Assimp
+add_subdirectory(external/assimp)
+target_link_libraries(${PROJECT_NAME} assimp)
+
+
 # CATCH 2
 add_subdirectory(external/catch2)
 add_executable(tests
 	"tests/test.cpp"
+	"tests/model_test.cpp"
 	${SOURCES}
 	${INCLUDES}
+	${TEXTURES}
 )
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(tests PRIVATE glad)
 target_link_libraries(tests PRIVATE glm)
 target_link_libraries(tests PRIVATE glfw)
+target_link_libraries(tests PRIVATE assimp)
+
 
 
 # Shader Files
@@ -81,6 +98,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
     ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
     ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

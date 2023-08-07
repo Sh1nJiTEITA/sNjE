@@ -20,6 +20,6 @@ void main()
 	tex_coo = aTex;
 
 	// To fragment shader
-	normal = aNormal;
+	normal = mat3(transpose(inverse(rot))) * aNormal;
 }
 
