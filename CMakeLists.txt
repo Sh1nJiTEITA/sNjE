@@ -7,13 +7,6 @@ include_directories(include)
 include_directories(shaders)
 include_directories(textures)
 
-# Sources
-set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set(SOURCES 
-	${SOURCES_DIR}/Shader.cpp
-	${SOURCES_DIR}/Camera.cpp
-)
-
 # Textures
 set(TEXTURE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
 set(TEXTURES
@@ -21,13 +14,24 @@ set(TEXTURES
 	${TEXTURE_DIR}/models/cube.dae
 )
 
+
+# Sources
+set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(SOURCES 
+	${SOURCES_DIR}/Shader.cpp # 1
+	${SOURCES_DIR}/Camera.cpp # 2
+	${SOURCES_DIR}/snjVertex.cpp # 3
+)
+
 # Includes
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(INCLUDES
-	${INCLUDE_DIR}/Shader.h
 	${INCLUDE_DIR}/LocalException.hpp
-	${INCLUDE_DIR}/Camera.h
 	${INCLUDE_DIR}/stb_image.h
+
+	${INCLUDE_DIR}/Shader.h # 1
+	${INCLUDE_DIR}/Camera.h # 2
+	${INCLUDE_DIR}/snjVertex.h # 2
 )
 
 
@@ -53,19 +57,19 @@ target_link_libraries(${PROJECT_NAME} glfw)
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} glad)
 
-
 # GLM
 add_subdirectory(external/glm)
 target_link_libraries(${PROJECT_NAME} glm)
 
 
+# Assimp
 set(ZLIB_LIBRARIES zlibstatic)
 set(ENABLE_BOOST_WORKAROUND ON)
 set(BUILD_STATIC_LIB ON)
 set(BUILD_ASSIMP_TOOLS  ON)
 set(ASSIMP_BUILD_STATIC_LIB ON)
 
-# Assimp
+
 add_subdirectory(external/assimp)
 target_link_libraries(${PROJECT_NAME} assimp)
 
@@ -75,10 +79,13 @@ add_subdirectory(external/catch2)
 add_executable(tests
 	"tests/test.cpp"
 	"tests/model_test.cpp"
+	"tests/mesh_test.cpp"
+
 	${SOURCES}
 	${INCLUDES}
 	${TEXTURES}
 )
+
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(tests PRIVATE glad)
 target_link_libraries(tests PRIVATE glm)
@@ -88,19 +95,19 @@ target_link_libraries(tests PRIVATE assimp)
 
 
 # Shader Files
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
