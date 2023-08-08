@@ -21,6 +21,7 @@ set(SOURCES
 	${SOURCES_DIR}/Shader.cpp # 1
 	${SOURCES_DIR}/Camera.cpp # 2
 	${SOURCES_DIR}/snjVertex.cpp # 3
+	${SOURCES_DIR}/snjMesh.cpp # 3
 )
 
 # Includes
@@ -32,6 +33,7 @@ set(INCLUDES
 	${INCLUDE_DIR}/Shader.h # 1
 	${INCLUDE_DIR}/Camera.h # 2
 	${INCLUDE_DIR}/snjVertex.h # 2
+	${INCLUDE_DIR}/snjMesh.h # 2
 )
 
 
