@@ -97,19 +97,27 @@ target_link_libraries(tests PRIVATE assimp)
 
 
 # Shader Files
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
-#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
-#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
-#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test_shader.vert
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test_shader.frag
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
-#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
-#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+
+
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
+    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

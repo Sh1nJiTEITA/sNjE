@@ -172,3 +172,18 @@ void Shader::SetMat4(const std::string& name, glm::mat4 inv)
 {
 	glUniformMatrix4fv(glGetUniformLocation(__id, name.c_str()), 1, GL_FALSE, &inv[0][0]);
 }
+
+void Shader::SetModel(glm::mat4 inv)
+{
+	this->SetMat4("model", inv);
+}
+
+void Shader::SetProjection(glm::mat4 inv)
+{
+	this->SetMat4("projection", inv);
+}
+
+void Shader::SetView(glm::mat4 inv)
+{
+	this->SetMat4("view", inv);
+}

@@ -67,6 +67,10 @@ public:
 	void SetMat2(const std::string& name, glm::mat2 inv);
 	void SetMat3(const std::string& name, glm::mat3 inv);
 	void SetMat4(const std::string& name, glm::mat4 inv);
+
+	void SetModel(glm::mat4 inv);
+	void SetProjection(glm::mat4 inv);
+	void SetView(glm::mat4 inv);
 };
 
 
