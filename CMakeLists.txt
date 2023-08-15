@@ -5,23 +5,19 @@ project(${PROJECT_NAME})
 
 include_directories(include)
 include_directories(shaders)
-include_directories(textures)
+#include_directories(textures)
 
-# Textures
-set(TEXTURE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/textures)
-set(TEXTURES
-	${TEXTURE_DIR}/container2.png
-	${TEXTURE_DIR}/models/cube.dae
-)
+
 
 
 # Sources
 set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCES 
-	${SOURCES_DIR}/Shader.cpp # 1
-	${SOURCES_DIR}/Camera.cpp # 2
-	${SOURCES_DIR}/snjVertex.cpp # 3
-	${SOURCES_DIR}/snjMesh.cpp # 3
+	${SOURCES_DIR}/Shader.cpp		# 1
+	${SOURCES_DIR}/Camera.cpp		# 2
+	${SOURCES_DIR}/snjVertex.cpp	# 3
+	${SOURCES_DIR}/snjMesh.cpp		# 4
+	${SOURCES_DIR}/snjModel.cpp		# 5
 )
 
 # Includes
@@ -30,11 +26,13 @@ set(INCLUDES
 	${INCLUDE_DIR}/LocalException.hpp
 	${INCLUDE_DIR}/stb_image.h
 
-	${INCLUDE_DIR}/Shader.h # 1
-	${INCLUDE_DIR}/Camera.h # 2
-	${INCLUDE_DIR}/snjVertex.h # 2
-	${INCLUDE_DIR}/snjMesh.h # 2
+	${INCLUDE_DIR}/Shader.h			# 1
+	${INCLUDE_DIR}/Camera.h			# 2
+	${INCLUDE_DIR}/snjVertex.h		# 3
+	${INCLUDE_DIR}/snjMesh.h		# 4
+	${INCLUDE_DIR}/snjModel.h		# 5
 )
+
 
 
 
@@ -42,9 +40,31 @@ add_executable(${PROJECT_NAME}
 	"main.cpp" 
 	"main.h"
 	${SOURCES}
-	${TEXTURES}
 	${INCLUDES}
 )
+
+
+# Textures
+add_custom_target(COPY_TEXTURES ALL
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/textures ${CMAKE_BINARY_DIR}/textures
+    DEPENDS # Добавьте зависимости, если необходимо
+)
+
+add_dependencies(${PROJECT_NAME} COPY_TEXTURES)
+
+
+
+# Shaders
+
+file(GLOB SHADERS ${CMAKE_CURRENT_SOURCE_DIR}/shaders/*)
+foreach(shaderi ${SHADERS})
+configure_file(${shaderi} ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+endforeach()
+
+
+
+
 
 # GLFW LIBRARY
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -78,46 +98,66 @@ target_link_libraries(${PROJECT_NAME} assimp)
 
 # CATCH 2
 add_subdirectory(external/catch2)
+
 add_executable(tests
 	"tests/test.cpp"
-	"tests/model_test.cpp"
+	#"tests/model_test.cpp"
 	"tests/mesh_test.cpp"
 
 	${SOURCES}
 	${INCLUDES}
-	${TEXTURES}
 )
 
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+#target_link_libraries(tests PRIVATE Catch2::Catch2)
 target_link_libraries(tests PRIVATE glad)
 target_link_libraries(tests PRIVATE glm)
 target_link_libraries(tests PRIVATE glfw)
 target_link_libraries(tests PRIVATE assimp)
 
+add_dependencies(tests COPY_TEXTURES)
 
 
 # Shader Files
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test_shader.vert
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test_shader.frag
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.vert
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/std_object.frag
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 
 
+#FILE(
+	#COPY ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+	#DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+#)
+
+#file(
+	#COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures/models/test
+	#DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
+#)
+
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.vert
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/lamp.frag
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test_shader.vert
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/shaders/test_shader.frag
+#    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
 
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
-    ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/textures DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/cube.obj
+    #${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/something.obj
+    #${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/textures/models/FinalBaseMesh.obj
+    #${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+
+

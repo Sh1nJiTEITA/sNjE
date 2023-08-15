@@ -5,11 +5,13 @@
 #include <snjVertex.h>
 #include <snjMesh.h>
 #include <Camera.h>
+#include <snjModel.h>
 
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 #include <assimp/vector3.h>
 #include <GLFW/glfw3.h>
+
 
 
 TEST_CASE("snjVertex.h", "[snjVertex]")
@@ -188,6 +190,22 @@ TEST_CASE("snjVertex.h", "[snjVertex]")
 
 		REQUIRE(sizeof(snjVertex) == sizeof(glm::vec3) * 2 + sizeof(glm::vec2));
 	}
+
+	/*SECTION("snjTexture")
+	{
+		snjTexture texture_1("", 0x01);
+		REQUIRE(texture_1.id == 0);
+
+		snjTexture texture_2("", 0x01);
+		REQUIRE(texture_2.id == 1);
+		REQUIRE(texture_1.id == 0);
+
+		snjTexture texture_3("", 0x01);
+		REQUIRE(texture_3.id == 2);
+		REQUIRE(texture_2.id == 1);
+		REQUIRE(texture_1.id == 0);
+	}*/
+
 }
 
 
@@ -215,6 +233,8 @@ FreeFlightCamera cam(
 
 TEST_CASE("Mesh")
 {
+	
+	
 	std::vector<float> raw_vertices = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
@@ -301,10 +321,10 @@ TEST_CASE("Mesh")
 	}*/
 
 	std::vector<snjTexture> textures = {
-		snjTexture("FDSFSDFSDF", SNJ_DIFFUSE_TEXTURE),
-		snjTexture("240318i94", SNJ_DIFFUSE_TEXTURE),
-		snjTexture("gdfg1239", SNJ_SPECULAR_TEXTURE),
-		snjTexture("2313123123", SNJ_SPECULAR_TEXTURE)
+		snjTexture("FDSFSDFSDF", SNJ_DIFFUSE_TEXTURE, 1),
+		snjTexture("240318i94", SNJ_DIFFUSE_TEXTURE, 2),
+		snjTexture("gdfg1239", SNJ_SPECULAR_TEXTURE, 3),
+		snjTexture("2313123123", SNJ_SPECULAR_TEXTURE, 4)
 	};
 
 	
@@ -314,7 +334,7 @@ TEST_CASE("Mesh")
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, "snjE", NULL, NULL);
 	if (window == NULL)
 	{
 		throw LocalException("Failed to create GLFW window");
@@ -330,6 +350,12 @@ TEST_CASE("Mesh")
 	
 	Shader shader_1("test_shader.vert", "test_shader.frag");
 
+	//snjModel model_1("textures/models/test/cube_s.obj");
+	//snjModel model_1("textures/models/test/something2.obj");
+	
+	snjModel model_1("textures/models/test/PTS_Burlak.obj");
+
+	//snjModel model_1("FinalBaseMesh.obj");
 	
 
 	
@@ -349,7 +375,8 @@ TEST_CASE("Mesh")
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
-		mesh_1.draw(shader_1);
+		//mesh_1.draw(shader_1);
+		model_1.draw(shader_1);
 
 		shader_1.SetModel(glm::mat4(1.0f));
 		shader_1.SetProjection(cam.GetProjection());

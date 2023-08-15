@@ -1,19 +1,20 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/benchmark/catch_benchmark.hpp>
-
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-
-#include <iostream>
-
+//#include <catch2/catch_test_macros.hpp>
+//#include <catch2/benchmark/catch_benchmark.hpp>
+//
+//#include <assimp/Importer.hpp>
+//#include <assimp/scene.h>
+//#include <assimp/postprocess.h>
+//
+//
+//#include <iostream>
+//
+//#include <snjModel.h>
 //
 //TEST_CASE("MODEL_TEST")
 //{
 //	Assimp::Importer importer;
 //
-//	std::string path = "cube.dae";
+//	std::string path = "cube.obj";
 //
 //	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 //
@@ -34,6 +35,9 @@
 //	// For every mesh
 //	for (int mesh_index = 0; mesh_index < num_of_meshes; ++mesh_index)
 //	{
+//		//snjModel("fdsfsdf").__processMesh(scene->mMeshes[mesh_index], scene);
+//		snjModel model_1("cube.obj");
+//
 //		unsigned int num_of_vertices = scene->mMeshes[mesh_index]->mNumVertices;
 //		std::cout << "num_of_vertices = " << num_of_vertices << " in mesh = " << mesh_index << std::endl;
 //

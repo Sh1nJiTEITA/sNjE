@@ -33,16 +33,32 @@ void snjMesh::__setUpData()
 	);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(snjVertex), (void*)0);
+	unsigned int stride = 0;
+
+	if (__is_pos)
+	{
+		
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(snjVertex), (void*)(stride));
+		glEnableVertexAttribArray(0);
+		stride += 3;
+	}
+	if (__is_normal)
+	{
+		
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(snjVertex), (void*)(stride * sizeof(float)));
+		glEnableVertexAttribArray(1);
+		stride += 3;
+	}
+	if (__is_texture_coo)
+	{
+		
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(snjVertex), (void*)(stride * sizeof(float)));
+		glEnableVertexAttribArray(2);
+		stride += 2;
+	}
 
 
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(snjVertex), (void*)(3 * sizeof(float)));
-
-
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(snjVertex), (void*)(6 * sizeof(float)));
+	
 
 	//glBindVertexArray(0);
 }
@@ -104,8 +120,38 @@ snjMesh::snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indi
 
 void snjMesh::draw(Shader shader)
 {
-	shader.Use();
+ 	shader.Use();
 
+	unsigned int diff_counter = 1;
+	unsigned int spec_counter = 1;
+
+	for (unsigned int texture_index = 0; texture_index < __textures.size(); ++texture_index)
+	{
+		glActiveTexture(GL_TEXTURE0 + texture_index);
+
+		std::string texture_type;
+
+		if (__textures[texture_index].type == SNJ_DIFFUSE_TEXTURE)
+		{
+			texture_type = "diffuse_" + std::to_string(diff_counter);
+			diff_counter++;
+		}
+		else if (__textures[texture_index].type == SNJ_SPECULAR_TEXTURE)
+		{
+			texture_type = "specular_" + std::to_string(spec_counter);
+			spec_counter++;
+		}
+		else
+		{
+			throw LocalException("Error in mesh: Underfined type of texture");
+		}
+		glActiveTexture(GL_TEXTURE0);
+		std::string variable = "material." + texture_type;
+
+		shader.SetInt(variable, texture_index);
+		glBindTexture(GL_TEXTURE_2D, __textures[texture_index].id);
+
+	}
 
 
 	glBindVertexArray(__VAO);

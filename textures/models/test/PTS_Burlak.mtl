@@ -1,0 +1,62 @@
+# Blender MTL File: 'PTS_Burlak.blend'
+# Material Count: 5
+
+newmtl Detals_mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.225424 0.225424 0.225424
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Serega\Desktop\19.10.-PTS_ Burlak\Polovinki\nadp.png
+map_Bump -bm 5.000000 Detals_normal_map.png
+
+newmtl Disc_mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 5.000000 PTS_normal_map.png
+map_Kd PTS_diffus_map.png
+
+newmtl Kuzov_mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.200000 0.200000 0.200000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 5.000000 Kuzov_normal_map.png
+map_Kd Kuzov_diffus_map.png
+
+newmtl Kuzov_mat_Untitled.004
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.200000 0.200000 0.200000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd C:\Users\Serega\Desktop\19.10.-PTS_ Burlak\texture\Kuzov_AO_map1.png
+map_Bump -bm 5.000000 Kuzov_normal_map.png
+
+newmtl Shassi_mat
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.200000 0.200000 0.200000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump -bm 5.000000 Shassi_normal_map.png
+map_Kd Shassi_diffus_map.png

@@ -7,6 +7,14 @@
 *
 */
 
+//#ifndef SNJ_STATIC_TEXTURE_MESH_COUNTER
+//#define SNJ_STATIC_TEXTURE_MESH_COUNTER
+//
+//
+//
+//#endif
+
+
 #ifndef SNJMESH_H
 #define SNJMESH_H
 
@@ -23,7 +31,7 @@
 // STL
 #include <vector>
 #include <string>
-#include <algorithm>
+//#include <algorithm>
 #include <unordered_map>
 
 // Defines
@@ -34,11 +42,23 @@
 
 
 
+
+
+
 struct snjTexture {
+
+
+	unsigned int id;
 	std::string path;
 	unsigned int type;
-	snjTexture(std::string _path, unsigned int _type) : path(_path), type(_type) {}
+	
+	
+	snjTexture(std::string _path, unsigned int _type, unsigned int _id) : path(_path), type(_type), id(_id)
+	{	
+	}
 };
+
+
 
 
 class snjMesh {
@@ -49,7 +69,10 @@ class snjMesh {
 
 	unsigned int __VAO, __VBO, __EBO;
 
-	bool isTexture;
+	bool __is_pos;
+	bool __is_normal;
+	bool __is_texture_coo;
+	
 	unsigned int __stride;
 
 	void __setUpData();
@@ -68,7 +91,7 @@ public:
 
 	snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indices, std::vector<snjTexture> textures);
 
-	void SimplifyIndices();
+	//void SimplifyIndices();
 	void draw(Shader shader);
 
 };

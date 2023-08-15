@@ -137,6 +137,7 @@ int main()
 		//glEnableVertexAttribArray(1);
 
 
+
 		cam.BindMousePos(&xpos, &ypos);
 
 		while (!glfwWindowShouldClose(window))
