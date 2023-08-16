@@ -7,13 +7,6 @@
 *
 */
 
-//#ifndef SNJ_STATIC_TEXTURE_MESH_COUNTER
-//#define SNJ_STATIC_TEXTURE_MESH_COUNTER
-//
-//
-//
-//#endif
-
 
 #ifndef SNJMESH_H
 #define SNJMESH_H
@@ -73,6 +66,8 @@ class snjMesh {
 	bool __is_normal;
 	bool __is_texture_coo;
 	
+	float __shininess;
+
 	unsigned int __stride;
 
 	void __setUpData();
@@ -90,6 +85,8 @@ class snjMesh {
 public:
 
 	snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indices, std::vector<snjTexture> textures);
+	snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indices, std::vector<snjTexture> textures, float _sh);
+
 
 	//void SimplifyIndices();
 	void draw(Shader shader);

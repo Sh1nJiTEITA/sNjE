@@ -353,7 +353,11 @@ TEST_CASE("Mesh")
 	//snjModel model_1("textures/models/test/cube_s.obj");
 	//snjModel model_1("textures/models/test/something2.obj");
 	
-	snjModel model_1("textures/models/test/PTS_Burlak.obj");
+	//snjModel model_1("textures/models/test/PTS_Burlak.obj");
+
+	//snjModel model_1("textures/models/tampon/tampon.obj");
+
+	//snjModel model_1("textures/models/test_gun/AR-15.fbx");
 
 	//snjModel model_1("FinalBaseMesh.obj");
 	
@@ -376,11 +380,16 @@ TEST_CASE("Mesh")
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		//mesh_1.draw(shader_1);
+		model_1.ChangePosByVec3(glm::vec3(0, 0, 0));
 		model_1.draw(shader_1);
 
-		shader_1.SetModel(glm::mat4(1.0f));
+		//shader_1.SetModel(glm::mat4(1.0f));
 		shader_1.SetProjection(cam.GetProjection());
 		shader_1.SetView(cam.GetView());
+
+
+		model_1.ChangePosByVec3(glm::vec3(2, 2, 2));
+		model_1.draw(shader_1);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

@@ -5,6 +5,7 @@ void snjMesh::__setUpData()
 	__checkData();
 
 
+
 	glGenVertexArrays(1, &__VAO);
 	glGenBuffers(1, &__VBO);
 	glGenBuffers(1, &__EBO);
@@ -87,7 +88,10 @@ void snjMesh::__checkData()
 			throw LocalException("Error::snjMesh: Not all vertices position is defined.");
 		}
 	}
-	
+	else
+	{
+		__is_pos = true;
+	}
 
 	if (!std::any_of(__vertices.begin(), __vertices.end(), [](snjVertex vert) { return vert.isNorm(); }))
 	{
@@ -100,19 +104,37 @@ void snjMesh::__checkData()
 			throw LocalException("Error::snjMesh: Not all vertices normal is defined.");
 		}
 	}
-
-	// TODO: Texture adaptation;
-	/*if (!std::all_of(__vertices.begin(), __vertices.end(), [](snjVertex vert) { return vert.isTex(); }))
+	else
 	{
-		throw LocalException("Error::snjMesh: Not all vertices texture coordinates is defined");
-	}*/
+		__is_normal = true;
+	}
 
+	if (std::all_of(__vertices.begin(), __vertices.end(), [](snjVertex vert) { return vert.isTex(); }))
+	{
+		__is_texture_coo = true;
+	}
+	else
+	{
+		__is_texture_coo = false;
+	}
+	
+	
 }
 
 snjMesh::snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indices, std::vector<snjTexture> textures) :
 	__vertices(vertices),
 	__indices(indices),
-	__textures(textures)
+	__textures(textures),
+	__shininess(1.0f)
+{	
+	__setUpData();
+}
+
+snjMesh::snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indices, std::vector<snjTexture> textures, float _sh) :
+	__vertices(vertices),
+	__indices(indices),
+	__textures(textures),
+	__shininess(_sh)
 {
 	__setUpData();
 }
@@ -121,37 +143,52 @@ snjMesh::snjMesh(std::vector<snjVertex> vertices, std::vector<unsigned int> indi
 void snjMesh::draw(Shader shader)
 {
  	shader.Use();
-
-	unsigned int diff_counter = 1;
-	unsigned int spec_counter = 1;
-
-	for (unsigned int texture_index = 0; texture_index < __textures.size(); ++texture_index)
+	/*
+		If mesh has any textures we must process them, if not - we don't need this.
+		
+		To tell shader what kind of mesh is (with texture or not) it uses uniform bool.
+	*/
+	if (__is_texture_coo)
 	{
-		glActiveTexture(GL_TEXTURE0 + texture_index);
+		shader.SetBool("hasTextures", true);
+		
+		unsigned int diff_counter = 1;
+		unsigned int spec_counter = 1;
 
-		std::string texture_type;
-
-		if (__textures[texture_index].type == SNJ_DIFFUSE_TEXTURE)
+		for (unsigned int texture_index = 0; texture_index < __textures.size(); ++texture_index)
 		{
-			texture_type = "diffuse_" + std::to_string(diff_counter);
-			diff_counter++;
-		}
-		else if (__textures[texture_index].type == SNJ_SPECULAR_TEXTURE)
-		{
-			texture_type = "specular_" + std::to_string(spec_counter);
-			spec_counter++;
-		}
-		else
-		{
-			throw LocalException("Error in mesh: Underfined type of texture");
-		}
-		glActiveTexture(GL_TEXTURE0);
-		std::string variable = "material." + texture_type;
+			glActiveTexture(GL_TEXTURE0 + texture_index);
 
-		shader.SetInt(variable, texture_index);
-		glBindTexture(GL_TEXTURE_2D, __textures[texture_index].id);
+			std::string texture_type;
 
+			if (__textures[texture_index].type == SNJ_DIFFUSE_TEXTURE)
+			{
+				texture_type = "diffuse_" + std::to_string(diff_counter);
+				diff_counter++;
+			}
+			else if (__textures[texture_index].type == SNJ_SPECULAR_TEXTURE)
+			{
+				texture_type = "specular_" + std::to_string(spec_counter);
+				spec_counter++;
+			}
+			else
+			{
+				throw LocalException("Error in mesh: Underfined type of texture");
+			}
+			glActiveTexture(GL_TEXTURE0);
+			std::string variable = "material." + texture_type;
+
+			shader.SetInt(variable, texture_index);
+			glBindTexture(GL_TEXTURE_2D, __textures[texture_index].id);
+
+			shader.SetFloat("material.shininess", __shininess);
+		}
 	}
+	else
+	{
+		shader.SetBool("hasTextures", false);
+	}
+	
 
 
 	glBindVertexArray(__VAO);

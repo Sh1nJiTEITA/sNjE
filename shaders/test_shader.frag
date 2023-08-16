@@ -18,6 +18,8 @@ struct Material
 	sampler2D specular_4;
 	sampler2D diffuse_5;
 	sampler2D specular_5;
+
+	float shininess;
 };
 
 uniform Material material;

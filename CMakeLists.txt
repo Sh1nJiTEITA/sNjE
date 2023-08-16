@@ -13,11 +13,13 @@ include_directories(shaders)
 # Sources
 set(SOURCES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(SOURCES 
-	${SOURCES_DIR}/Shader.cpp		# 1
-	${SOURCES_DIR}/Camera.cpp		# 2
-	${SOURCES_DIR}/snjVertex.cpp	# 3
-	${SOURCES_DIR}/snjMesh.cpp		# 4
-	${SOURCES_DIR}/snjModel.cpp		# 5
+	${SOURCES_DIR}/Shader.cpp					# 1
+	${SOURCES_DIR}/Camera.cpp					# 2
+	${SOURCES_DIR}/snjVertex.cpp				# 3
+	${SOURCES_DIR}/snjMesh.cpp					# 4
+	${SOURCES_DIR}/snjModel.cpp					# 5
+	${SOURCES_DIR}/snjLightSourceModel.cpp		# 6
+	${SOURCES_DIR}/snjLightsHandler.cpp			# 7
 )
 
 # Includes
@@ -26,11 +28,13 @@ set(INCLUDES
 	${INCLUDE_DIR}/LocalException.hpp
 	${INCLUDE_DIR}/stb_image.h
 
-	${INCLUDE_DIR}/Shader.h			# 1
-	${INCLUDE_DIR}/Camera.h			# 2
-	${INCLUDE_DIR}/snjVertex.h		# 3
-	${INCLUDE_DIR}/snjMesh.h		# 4
-	${INCLUDE_DIR}/snjModel.h		# 5
+	${INCLUDE_DIR}/Shader.h						# 1
+	${INCLUDE_DIR}/Camera.h						# 2
+	${INCLUDE_DIR}/snjVertex.h					# 3
+	${INCLUDE_DIR}/snjMesh.h					# 4
+	${INCLUDE_DIR}/snjModel.h					# 5
+	${INCLUDE_DIR}/snjLightSourceModel.h		# 6
+	${INCLUDE_DIR}/snjLightsHandler.h			# 7
 )
 
 

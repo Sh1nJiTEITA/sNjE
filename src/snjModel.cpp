@@ -74,17 +74,60 @@ snjMesh snjModel::__processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<unsigned int> indices(face_num * 3);
 	std::vector<snjTexture> textures;
 
+	if (!mesh->HasNormals())
+	{
+		std::stringstream ss;
+		ss << "Error in loading model. Model with path: '" << this->__path 
+			<< "' consists of Mesh '" << mesh->mName.C_Str() 
+			<< "', which has no normals." << std::endl;
+		throw LocalException(ss.str());
+	}
+
+	if (!mesh->HasFaces())
+	{
+		std::stringstream ss;
+		ss << "Error in loading model. Model with path: '" << this->__path
+			<< "' consists of Mesh '" << mesh->mName.C_Str()
+			<< "', which has no faces (indices)." << std::endl;
+		throw LocalException(ss.str());
+	}
+
+	bool isTexture = true;
+	if (!mesh->HasTextureCoords(0))
+	{
+		std::stringstream ss;
+		ss << "Error in loading model. Model with path: '" << this->__path
+			<< "' consists of Mesh '" << mesh->mName.C_Str()
+			<< "', which has no texture coordinates." << std::endl;
+		std::cout << ss.str() << std::endl;
+		//throw LocalException(ss.str());
+		isTexture = false;
+	}
+	
+	
+
+
 	for (size_t vertex_index = 0; vertex_index < vertices_num; ++vertex_index)
 	{
 		
-		
-		snjVertex vert(
-			mesh->mVertices[vertex_index],
-			mesh->mNormals[vertex_index],
-			/*aiVector3D(0.0, 0.0, 0.0)*/
-			mesh->mTextureCoords[0][vertex_index]
-		);
-		vertices[vertex_index] = vert;
+		if (isTexture)
+		{
+			snjVertex vert(
+				mesh->mVertices[vertex_index],
+				mesh->mNormals[vertex_index],
+				mesh->mTextureCoords[0][vertex_index]
+			);
+			vertices[vertex_index] = vert;
+		}
+		else
+		{
+			snjVertex vert(
+				mesh->mVertices[vertex_index],
+				mesh->mNormals[vertex_index],
+				aiVector3D(SNJ_NAN, SNJ_NAN, SNJ_NAN)
+			);
+			vertices[vertex_index] = vert;
+		}
 	}
 	
 	unsigned int index_num = mesh->mFaces->mNumIndices;
@@ -100,15 +143,28 @@ snjMesh snjModel::__processMesh(aiMesh* mesh, const aiScene* scene)
 	// Material and textures //
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
-	// Diffuse
-	std::vector<snjTexture> diffuse_textures = __loadMeterialTextures(material, aiTextureType_DIFFUSE, SNJ_DIFFUSE_TEXTURE);
-	textures.insert(textures.end(), diffuse_textures.begin(), diffuse_textures.end());
 
-	// Specular
-	std::vector<snjTexture> specular_textures = __loadMeterialTextures(material, aiTextureType_SPECULAR, SNJ_SPECULAR_TEXTURE);
-	textures.insert(textures.end(), specular_textures.begin(), specular_textures.end());
+	float sh;
+	if (AI_SUCCESS != material->Get(AI_MATKEY_SHININESS, sh)) {
+		
+		std::cout << "Now shininess in model: " << mesh->mName.C_Str() << std::endl;
+	}
+	else
+	{
+		std::cout << "Shininess of " << mesh->mName.C_Str() << "is "<< sh << std::endl;
+	}
 
+	if (isTexture)
+	{
+		// Diffuse
+		std::vector<snjTexture> diffuse_textures = __loadMeterialTextures(material, aiTextureType_DIFFUSE, SNJ_DIFFUSE_TEXTURE);
+		textures.insert(textures.end(), diffuse_textures.begin(), diffuse_textures.end());
 
+		// Specular
+		std::vector<snjTexture> specular_textures = __loadMeterialTextures(material, aiTextureType_SPECULAR, SNJ_SPECULAR_TEXTURE);
+		textures.insert(textures.end(), specular_textures.begin(), specular_textures.end());
+	}
+	
 	return snjMesh(vertices, indices, textures);
 }
 
@@ -231,17 +287,38 @@ std::vector<snjTexture> snjModel::__loadMeterialTextures(aiMaterial* mat, aiText
 }
 
 snjModel::snjModel(const char* path) :
-	__path(path)
-
+	__path(path),
+	__pos(glm::vec3(1.0f))
 {
 	__setUpData();
 }
 
+snjModel::snjModel(const char* path, glm::vec3 pos) :
+	__path(path),
+	__pos(pos)
+{
+	__setUpData();
+}
+
+
+
+void snjModel::ChangePosByVec3(glm::vec3 pos_vec)
+{
+	__pos = pos_vec;
+}
+
 void snjModel::draw(Shader& shader)
 {
+	this->drawm(shader);
+}
+
+void snjModel::drawm(Shader& shader)
+{
+	// Set model position in 3D space
+	shader.SetMat4("model", glm::translate(glm::mat4(1.0f), __pos));
+
 	for (size_t mesh_index = 0; mesh_index < __meshes.size(); ++mesh_index)
 	{
 		__meshes[mesh_index].draw(shader);
 	}
-
 }
